@@ -48,10 +48,26 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function showProduct(string $id)
+    public function showProduct(Product $product)
     {
-        $product  =  Product::find($id); 
+        // check error and redirect to notfound page
 
+        
+    
+        // if (Product::where('id',$product->id)->doesntExist()) {
+        //     return redirect()->route('products.notfound');
+        // }
         return view('products.show',compact('product'));
+    }
+    
+
+    public function edit(Product $product)
+    {
+        return view('products.edit',compact('product'));
+    }
+
+    public function notfoundView()
+    {
+        return view('products.notfound');
     }
 }

@@ -15,7 +15,11 @@ Route::get('/products/create',[ProductController::class,'create']) -> name('prod
 // create post route
 Route::post('/products/store', [ProductController::class, 'store']) -> name('products.store');
 
-Route::get('/products/{id}', [ProductController::class, 'showProduct'])
- -> name('products.show')
- -> whereNumber('id')
- ;
+Route::get('/products/{product}', [ProductController::class, 'showProduct'])
+ -> name('products.show');
+
+ Route:: get('/products/{product}/edit', [ProductController::class, 'edit']) -> name('products.edit');
+
+ // not found page route
+
+ Route::get('/products/notfound', [ProductController::class, 'notfoundView']) -> name('products.notfound');
