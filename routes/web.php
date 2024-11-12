@@ -23,3 +23,6 @@ Route::get('/products/{product}', [ProductController::class, 'showProduct'])
  // not found page route
 
  Route::get('/products/notfound', [ProductController::class, 'notfoundView']) -> name('products.notfound');
+
+ // update product route
+Route::patch('products/{product}', [ProductController::class, 'update']) -> name('products.update') -> name('products.update');

@@ -70,4 +70,9 @@ class ProductController extends Controller
     {
         return view('products.notfound');
     }
+
+    public function update(Request $request, Product $product) 
+    {
+        
+    }
 }
