@@ -1,28 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Route;
 
 // return home view
 Route::view('/', 'home');
 
+Route::controller(ProductController::class)->prefix('products')->name('products.')->group(function () {
+
 // return product view
-Route::get('/products', [ProductController::class, 'index']) -> name('products.index');
+    Route::get('/', 'index')->name('index');
 
 // return create product view
-Route::get('/products/create',[ProductController::class,'create']) -> name('products.create');
+    Route::get('/create', 'create')->name('create');
 
 // create post route
-Route::post('/products/store', [ProductController::class, 'store']) -> name('products.store');
+    Route::post('/store',  'store')->name('store');
 
-Route::get('/products/{product}', [ProductController::class, 'showProduct'])
- -> name('products.show');
+    Route::get('/{product}',  'showProduct')
+        ->name('show');
 
- Route:: get('/products/{product}/edit', [ProductController::class, 'edit']) -> name('products.edit');
+    Route::get('/{product}/edit',  'edit')->name('edit');
 
- // not found page route
+    // not found page route
 
- Route::get('/products/notfound', [ProductController::class, 'notfoundView']) -> name('products.notfound');
+    Route::get('/notfound',  'notfoundView')->name('notfound');
 
- // update product route
-Route::patch('products/{product}', [ProductController::class, 'update']) -> name('products.update') -> name('products.update');
+    // update product route
+    Route::patch('/{product}',  'update')->name('update');
+
+    Route::delete('/{product}',  'destroy')->name('destroy');
+});

@@ -10,6 +10,6 @@
         <p>Description: {{ $product->description }}</p>
         <p>Size: {{ $product->size }}</p>
     @endforeach
-
+{{$products->links('vendor.pagination.simple-tailwind')}}
 
 </x-layout>

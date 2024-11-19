@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\SaveProductRequest;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::orderBy('created_at')->paginate(3);
         // dd($products);
         return view('products.index',['products' => $products]);
     }
@@ -19,7 +20,7 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(Request $request) {
+    public function store(SaveProductRequest $request) {
         // $input = $request->all();
         // $name = $request->input('name');
 
@@ -36,24 +37,14 @@ class ProductController extends Controller
         */
 
 
-        // validate data user sent here
-        $request->validate([
-            'name' =>  'required|max:100',
-            'description' => 'nullable: min:3',
-            'size' => 'required|decimal:0,2, max:100'
-        ]);
-        // other type short
-        Product::create($request -> input());
+        $product = Product::create($request->validated());
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.show', $product)->with('status','Product created successfully');
     }
 
     public function showProduct(Product $product)
     {
-        // check error and redirect to notfound page
-
-        
-    
+        // check error and redirect to notfound page 
         // if (Product::where('id',$product->id)->doesntExist()) {
         //     return redirect()->route('products.notfound');
         // }
@@ -63,7 +54,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit',compact('product'));
+        return view('products.edit',compact('product'))->with('status', 'product edit successfully');
     }
 
     public function notfoundView()
@@ -71,8 +62,15 @@ class ProductController extends Controller
         return view('products.notfound');
     }
 
-    public function update(Request $request, Product $product) 
+    public function update(SaveProductRequest $request, Product $product) 
     {
-        
+        $product->update($request->validated());
+        return redirect()->route('products.show', $product)->with('status','Product updated successfully');
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+        return redirect()->route('products.index')->with('status','Product deleted successfully');
     }
 }
