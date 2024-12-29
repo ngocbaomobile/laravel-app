@@ -9,10 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('amenity_images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('amenity_id')->constrained('amenities')->onDelete('cascade');
+            $table->string('image_url');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('amenity_images');
     }
 };
