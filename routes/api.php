@@ -17,3 +17,15 @@ Route::prefix('amenities')->group(function () {
     Route::delete('/{id}', [AmenityController::class, 'destroy']);
     Route::get('/', [AmenityController::class, 'index']);
 });
+
+// Lazy loading and Egear loading
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index']);
+    Route::post('/', [PostController::class, 'store']);
+    Route::post('/comments', [CommentController::class, 'store']);
+});
+
+

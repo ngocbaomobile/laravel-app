@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Caterogy;
 use Illuminate\Http\Request;
-
+use Illuminate\Routing\Controller;
 class CaterogyController extends Controller
 {
     /**
